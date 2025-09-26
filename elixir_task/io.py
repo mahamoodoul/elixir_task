@@ -6,7 +6,7 @@ from .utils import to_int, to_float, safe_strip
 
 class SSegmentFile(SegmentSource):
     """Parser for `.s` files: two integers per line: start<TAB>end, half-open [start,end).
-    Assumes lines are sorted and non-overlapping (verification not enforced for speed).
+    Assumes lines are sorted and non-overlapping (verification not enforced for optimization).
     """
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -33,6 +33,9 @@ class FFunctionFile(FunctionSource):
                 if line == '' or line.startswith('#'):
                     continue
                 yield to_float(line)
+
+
+
 
 # Extra formats for extensibility
 class BedSegmentParser(SSegmentFile):

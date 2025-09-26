@@ -22,6 +22,6 @@ def guess_parser(path: Path, genome_length: Optional[int] = None) -> Tuple[str, 
         return ('function', CSVFunctionParser(path))
     if ext == '.const':
         if genome_length is None:
-            raise ValueError("--genome-length is required for .const function files")
+            raise ValueError("genome-length is required for .const function files")
         return ('function', ConstFunctionParser(path, genome_length))
     raise ValueError(f"Unsupported file extension: {ext}")

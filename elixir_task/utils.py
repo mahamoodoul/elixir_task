@@ -1,13 +1,22 @@
-from typing import Optional
-
 def to_float(s: str) -> float:
-    s = s.strip()
-    if not s:
-        return 0.0
-    return float(s)
+    value = s.strip()
+    if not value:
+        raise ValueError("Encountered empty value while parsing float")
+    try:
+        return float(value)
+    except ValueError as exc:
+        raise ValueError(f"Could not parse float from {value!r}") from exc
+
 
 def to_int(s: str) -> int:
-    return int(s.strip())
+    value = s.strip()
+    if not value:
+        raise ValueError("Encountered empty value while parsing int")
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise ValueError(f"Could not parse int from {value!r}") from exc
+
 
 def safe_strip(line: str) -> str:
     return line.rstrip("\n\r")

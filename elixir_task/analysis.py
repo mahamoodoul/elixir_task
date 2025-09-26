@@ -39,28 +39,48 @@ def overlap_length(a: Iterable[Segment], b: Iterable[Segment]) -> int:
 def covered_mean(segments: Iterable[Segment], values: Iterable[float]) -> float:
     """Mean of function values for indices covered by *any* segment.
     Assumes segments are sorted, non-overlapping, values are indexed from 0 increasing by 1.
+    Raises ``ValueError`` if a segment references positions beyond the available
+    function values.
     """
-    seg_it = iter(segments)
-    try:
-        cur = next(seg_it)
-    except StopIteration:
+
+    segs = list(segments)
+    if not segs:
         return float('nan')
-    ssum = 0.0
+
+    # Convert values iterable into a concrete list (needed for prefix sums)
+    vals = list(values)
+    n = len(vals)
+    L = sum(seg.end - seg.start for seg in segs)
+
+    if L == 0 or n == 0:
+        return float('nan')
+
+    # Strategy 1: Direct summation (O(L))
+    if L < n:
+        total = 0.0
+        count = 0
+        for seg in segs:
+            for i in range(seg.start, seg.end):
+                if 0 <= i < n:
+                    total += vals[i]
+                    count += 1
+        return (total / count) if count > 0 else float('nan')
+
+    # Strategy 2: Prefix sums (O(n + k))
+    prefix = [0.0] * (n + 1)
+    for i, v in enumerate(vals):
+        prefix[i + 1] = prefix[i] + v
+
+    total = 0.0
     count = 0
-    for idx, v in enumerate(values):
-        # advance segment pointer until segment may cover idx
-        while cur.end <= idx:
-            try:
-                cur = next(seg_it)
-            except StopIteration:
-                # we've passed all segments
-                return (ssum / count) if count>0 else float('nan')
-        if cur.start <= idx < cur.end:
-            ssum += v
-            count += 1
-        elif idx < cur.start:
-            continue
-    return (ssum / count) if count>0 else float('nan')
+    for seg in segs:
+        start = max(0, seg.start)
+        end = min(n, seg.end)
+        if start < end:
+            total += prefix[end] - prefix[start]
+            count += end - start
+
+    return (total / count) if count > 0 else float('nan')
 
 def pearson_correlation(x: Iterable[float], y: Iterable[float]) -> float:
     """Sample Pearson correlation r for paired series x,y of equal length.
@@ -79,6 +99,9 @@ def pearson_correlation(x: Iterable[float], y: Iterable[float]) -> float:
         sxy += a*b
     if n < 2:
         return float('nan')
+    sentinel = object()
+    if next(itx, sentinel) is not sentinel or next(ity, sentinel) is not sentinel:
+        raise ValueError("Function series must have the same length for correlation")
     # sample covariance denominator (n-1)
     num = sxy - (sx*sy)/n
     denom_x = sxx - (sx*sx)/n

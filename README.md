@@ -55,6 +55,12 @@ python -m elixir_task genome.bed signal.const --genome-length 1000000
 
 ```
 
+> **Large fixtures skipped from Git** — The `tests/data/testfile_a.*` and
+> `tests/data/testfile_b.*` files are huge synthetic datasets used for local
+> stress-testing. They remain in `.gitignore`, so clone/pull operations stay
+> lightweight. If you need them, drop equivalently named files into
+> `tests/data/` (or generate your own) before running the commands above.
+
 ### 3) Run tests
 
 ```bash
@@ -108,4 +114,3 @@ elixir-task/
 - For extremely large `.f` files on spinning disks, using buffered I/O and `readinto`/memoryview could further improve speed; current implementation is sufficient.
 - If the genome length varies across projects, we already allow `--genome-length` to be provided.
 - For real genomic BED files, supporting a chromosome column + genome mapping could be added in a future version.
-

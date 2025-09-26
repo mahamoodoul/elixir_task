@@ -16,6 +16,7 @@ It is written in Python with a small, extensible architecture designed to suppor
 
 #### macOS / Linux
 ```bash
+cd elixir_task 
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -U pip
@@ -51,7 +52,7 @@ Examples:
 python -m elixir_task tests/data/testfile_a.s tests/data/testfile_b.s
 python -m elixir_task tests/data/testfile_a.f tests/data/testfile_b.f
 python -m elixir_task tests/data/testfile_a.s tests/data/testfile_b.f
-python -m elixir_task genome.bed signal.const --genome-length 1000000
+python -m elixir_task tests/data/genome.bed tests/data/sample_function.const --genome-length 1000000
 
 ```
 

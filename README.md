@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ### 2) Run the CLI
 
 ```bash
-python -m elixir_task <path_to_file_X> <path_to_file_Y> [--genome-length 10000000] [--output result.txt]
+python -m elixir_task <path_to_file_X> <path_to_file_Y> [--genome-length 10000000]
 ```
 
 The program auto-detects file types by extension:

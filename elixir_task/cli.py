@@ -6,7 +6,7 @@ from .models import SegmentSource, FunctionSource
 from .analysis import overlap_length, pearson_correlation, covered_mean
 
 def main(argv=None):
-    p = argparse.ArgumentParser(description="ELIXIR 2025 Task CLI")
+    p = argparse.ArgumentParser(description="ELIXIR Task CLI")
     p.add_argument('file_x', type=Path)
     p.add_argument('file_y', type=Path)
     p.add_argument('--genome-length', type=int, default=None, help='Required for .const function files')

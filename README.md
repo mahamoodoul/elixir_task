@@ -36,6 +36,7 @@ pip install -r requirements.txt
 ### 2) Run the CLI
 
 ```bash
+python -m elixir_task --help
 python -m elixir_task <path_to_file_X> <path_to_file_Y> [--genome-length 10000000]
 ```
 
@@ -52,7 +53,7 @@ Examples:
 python -m elixir_task tests/data/testfile_a.s tests/data/testfile_b.s
 python -m elixir_task tests/data/testfile_a.f tests/data/testfile_b.f
 python -m elixir_task tests/data/testfile_a.s tests/data/testfile_b.f
-python -m elixir_task tests/data/genome.bed tests/data/sample_function.const --genome-length 1000000
+python -m elixir_task tests/data/genome.bed tests/data/sample_function.const --genome-length 1000000 
 
 ```
 

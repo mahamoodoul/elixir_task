@@ -12,6 +12,8 @@ It is written in Python with a small, extensible architecture designed to suppor
 
 ## Quickstart
 
+git clone https://github.com/mahamoodoul/elixir_task.git
+
 ### 1) Create a virtual environment (any OS) and install dependencies
 
 #### macOS / Linux
